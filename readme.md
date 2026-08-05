@@ -10,6 +10,30 @@ See `Freight_Rate_ML_Assessment.pdf` for the assessment instructions.
 4. Predict every row in `data/december_chart_inputs.csv` by filling its `predicted_rate` column.
 5. Install the scorer requirements and run:
 
+
+## TODO
+
+- [ ] look at the data, check shapes, dtypes, missing values, weird stuff 
+- [ ] plot target distribution, check if it needs log transform
+- [ ] correlation heatmap  see what drives posted_rate the most
+- [ ] plot rates over time (daily/weekly/monthly) to catch trends and seasonality
+- [ ] box plots by equipment type
+- [ ] clean up the data fix missing and other errors
+- [ ] build temporal features
+- [ ] target-encode the pickup-delivery lanes 
+- [ ] one-hot encode equipment
+- [ ] add interaction features 
+- [ ] set up time-based split 
+- [ ] train a quick linear regression baseline, note down MAE/RMSE
+- [ ] train LightGBM/XGBoost with engineered features
+- [ ] tune hyperparams 
+- [ ] check feature importance, drop anything useless
+- [ ] run final model on validation.csv, fill out validation_predictions.csv
+- [ ] fill predicted_rate in december-chart-inputs.csv
+- [ ] run score.py to validate and generate the december chart
+
+
+
 ```bash
 python -m pip install -r requirements.txt
 python score.py --predictions validation_predictions.csv --december-predictions data/december_chart_inputs.csv
