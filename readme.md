@@ -13,7 +13,7 @@ See `Freight_Rate_ML_Assessment.pdf` for the assessment instructions.
 
 ## TODO
 
-- [ ] look at the data, check shapes, dtypes, missing values, weird stuff 
+- [x] look at the data, check shapes, dtypes, missing values, weird stuff 
 - [ ] plot target distribution, check if it needs log transform
 - [ ] correlation heatmap  see what drives posted_rate the most
 - [ ] plot rates over time (daily/weekly/monthly) to catch trends and seasonality
