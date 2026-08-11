@@ -2,6 +2,15 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import KFold
 
+def load_and_split_data(filepath='train-test.csv'):
+    df = pd.read_csv(filepath)
+    df['date'] = pd.to_datetime(df['date'])
+    
+    # Time-based split to avoid data leakage
+    train_df = df[df['date'].dt.month <= 8].copy()
+    val_df = df[df['date'].dt.month > 8].copy()
+    
+    return train_df, val_df
 def clean_data(df, is_train=True, equipment_weight_medians=None):
    
     df = df.copy() 
@@ -36,9 +45,6 @@ def clean_data(df, is_train=True, equipment_weight_medians=None):
         df = df.drop(columns=['rate_per_mile']) # drop to prevent target leakage
         
     return df, equipment_weight_medians
-
-
-
 def target_encode(train_df, test_df, col, target, n_splits=5):
     
     kf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
@@ -58,8 +64,6 @@ def target_encode(train_df, test_df, col, target, n_splits=5):
     test_df[f"{col}_encoded"] = test_df[col].map(full_mean_map).fillna(global_mean)
     
     return train_df, test_df
-
-
 def _create_base_features(df):
         df = df.copy()
         
@@ -93,8 +97,6 @@ def _create_base_features(df):
                 df[col] = df[col].astype(int)
                 
         return df
-
-
 def engineer_features(train_df, test_df):
     
     # Apply base feature generation to both train and test
