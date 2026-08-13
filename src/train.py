@@ -73,10 +73,11 @@ def main():
                                        scoring='neg_mean_absolute_error', cv=3, random_state=42, verbose=1)
         else:
             print(f"Training default XGBoost Model (Target: {target_type})...")
+            # Using the optimized parameters as the new default!
             model = xgb.XGBRegressor(
-                n_estimators=1000, 
-                learning_rate=0.05, 
-                max_depth=6, 
+                n_estimators=1500, 
+                learning_rate=0.01, 
+                max_depth=4, 
                 subsample=0.8,
                 colsample_bytree=0.8,
                 random_state=42, 
@@ -87,7 +88,7 @@ def main():
     model.fit(X_train, y_train)
 
     if not args.b and args.tune:
-        print(f"\n Best parameters found: {model.best_params_}")
+        print(f"\nBest parameters found: {model.best_params_}")
 
     # 5. Predict and Evaluate
     val_preds_log = model.predict(X_val)
@@ -101,15 +102,12 @@ def main():
         val_preds = np.expm1(val_preds_log)
 
     mae = mean_absolute_error(y_val_true, val_preds)
-    rmse = np.sqrt(mean_squared_error(y_val_true, val_preds))
 
     print("-" * 30)
     if args.b:
         print(f"Baseline Linear Regression MAE:  ${mae:.2f}")
-        print(f"Baseline Linear Regression RMSE: ${rmse:.2f}")
     else:
         print(f"XGBoost MAE:  ${mae:.2f}")
-        print(f"XGBoost RMSE: ${rmse:.2f}")
     print("-" * 30)
 
 
