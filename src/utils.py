@@ -2,14 +2,31 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import KFold
 
-def load_and_split_data(filepath='train-test.csv'):
+def load_and_split_data(filepath='train-test.csv', split_type='time'):
+    """Loads data and creates either a time-based or lane-based train/validation split."""
     df = pd.read_csv(filepath)
     df['date'] = pd.to_datetime(df['date'])
     
-    # Time-based split to avoid data leakage
-    train_df = df[df['date'].dt.month <= 8].copy()
-    val_df = df[df['date'].dt.month > 8].copy()
-    
+    if split_type == 'time':
+        # Time-based split to avoid data leakage (Jan-Aug train, Sep-Oct val)
+        train_df = df[df['date'].dt.month <= 8].copy()
+        val_df = df[df['date'].dt.month > 8].copy()
+    elif split_type == 'lane':
+        # Geographic split: Train on 80% of lanes, test on 20% completely unseen lanes
+        df['temp_lane'] = df['pickup'] + " -> " + df['delivery']
+        unique_lanes = df['temp_lane'].unique()
+        
+        np.random.seed(42)
+        train_lanes = np.random.choice(unique_lanes, size=int(len(unique_lanes) * 0.8), replace=False)
+        
+        train_df = df[df['temp_lane'].isin(train_lanes)].copy()
+        val_df = df[~df['temp_lane'].isin(train_lanes)].copy()
+        
+        train_df = train_df.drop(columns=['temp_lane'])
+        val_df = val_df.drop(columns=['temp_lane'])
+    else:
+        raise ValueError("split_type must be 'time' or 'lane'")
+        
     return train_df, val_df
 def clean_data(df, is_train=True, equipment_weight_medians=None):
    
