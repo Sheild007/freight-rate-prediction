@@ -14,23 +14,23 @@ See `Freight_Rate_ML_Assessment.pdf` for the assessment instructions.
 ## TODO
 
 - [x] look at the data, check shapes, dtypes, missing values, weird stuff 
-- [ ] plot target distribution, check if it needs log transform
-- [ ] correlation heatmap  see what drives posted_rate the most
-- [ ] plot rates over time (daily/weekly/monthly) to catch trends and seasonality
-- [ ] box plots by equipment type
-- [ ] clean up the data fix missing and other errors
-- [ ] build temporal features
-- [ ] target-encode the pickup-delivery lanes 
-- [ ] one-hot encode equipment
-- [ ] add interaction features 
-- [ ] set up time-based split 
-- [ ] train a quick linear regression baseline, note down MAE/RMSE
-- [ ] train LightGBM/XGBoost with engineered features
-- [ ] tune hyperparams 
-- [ ] check feature importance, drop anything useless
-- [ ] run final model on validation.csv, fill out validation_predictions.csv
-- [ ] fill predicted_rate in december-chart-inputs.csv
-- [ ] run score.py to validate and generate the december chart
+- [x] plot target distribution, check if it needs log transform
+- [x] correlation heatmap  see what drives posted_rate the most
+- [x] plot rates over time (daily/weekly/monthly) to catch trends and seasonality
+- [x] box plots by equipment type
+- [x] clean up the data fix missing and other errors
+- [x] build temporal features
+- [x] target-encode the pickup-delivery lanes 
+- [x] one-hot encode equipment
+- [x] add interaction features 
+- [x] set up time-based split 
+- [x] train a quick linear regression baseline, note down MAE/RMSE
+- [x] train XGBoost with engineered features
+- [x] tune hyperparams 
+- [x] check feature importance, drop anything useless
+- [x] run final model on validation.csv, fill out validation_predictions.csv
+- [x] fill predicted_rate in december-chart-inputs.csv
+- [x] run score.py to validate and generate the december chart
 
 
 
